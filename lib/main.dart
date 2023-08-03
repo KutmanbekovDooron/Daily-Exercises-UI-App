@@ -1,6 +1,9 @@
 import 'package:daily_exercises/constants.dart';
+import 'package:daily_exercises/screens/detail_screen.dart';
 import 'package:daily_exercises/widgets/bottom_nav_bar.dart';
 import 'package:daily_exercises/widgets/category_card.dart';
+import 'package:daily_exercises/widgets/search_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -34,19 +37,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-        height: 80,
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            BottomNavItem(title: 'Today', icon: 'calendar', press: () { },),
-            BottomNavItem(title: 'All Exercises', icon: 'gym', press: () {  }, isActive: true,),
-            BottomNavItem(title: 'Settings', icon: 'Settings', press: () {  },),
-          ],
-        ),
-      ),
+      bottomNavigationBar: const BottomNavBar(),
       body: Stack(
         children: [
           Container(
@@ -83,20 +74,7 @@ class HomeScreen extends StatelessWidget {
                       .headlineMedium!
                       .copyWith(fontWeight: FontWeight.w900),
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 30),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30)),
-                  child: TextField(
-                    decoration: InputDecoration(
-                        hintText: "Search",
-                        icon: SvgPicture.asset("assets/icons/search.svg"),
-                        border: InputBorder.none),
-                  ),
-                ),
+                const SearchInput(),
                 Expanded(
                     child: GridView.count(
                   crossAxisCount: 2,
@@ -106,19 +84,26 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     CategoryCard(
                       title: "Diet recommendation",
-                      icon: "Hamburger", press: () {  },
+                      icon: "Hamburger",
+                      press: () {},
                     ),
                     CategoryCard(
                       title: "Kegel Excrecises",
-                      icon: "Excrecises", press: () {  },
+                      icon: "Excrecises",
+                      press: () {},
                     ),
                     CategoryCard(
                       title: "Meditation",
-                      icon: "Meditation", press: () {  },
+                      icon: "Meditation",
+                      press: () {
+                        Navigator.push(context,
+                            CupertinoPageRoute(builder: (_) => DetailScreen()));
+                      },
                     ),
                     CategoryCard(
                       title: "Yoga",
-                      icon: "yoga", press: () {  },
+                      icon: "yoga",
+                      press: () {},
                     ),
                   ],
                 ))
@@ -130,3 +115,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
